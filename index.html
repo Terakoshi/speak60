@@ -291,8 +291,9 @@
         別々の作業ではなく、ひと続きの流れです。
       </p>
       <div class="toggle" id="p1mode">
-        <button data-m="book" class="on">本のページを使う</button>
-        <button data-m="theme">本なし（テーマだけ）</button>
+        <button data-m="book" class="on">思考方式</button>
+        <button data-m="bunmatsu">文末表現</button>
+        <button data-m="theme">本なし</button>
       </div>
       <div id="prompts"></div>
       <p class="lead" id="pNote"></p>
@@ -439,6 +440,44 @@
       </div>
       <p class="cap">とくに3番。難しい本を選ぶと翻訳作業になってしまい、話す練習まで届きません。迷ったら手持ちで<strong>いちばんやさしい会話中心の本</strong>を。物足りないくらいでちょうどよいです。</p>
       <p class="cap"><strong>選んだら毎週取り替えないこと。</strong>1冊から毎週1ページずつ、20週かけて使い切るのが理想です。本を替えると言い回しの傾向が変わり、積み上がりません。</p>
+
+      <div class="big">使うのはこの2冊</div>
+      <div class="pic">
+        <svg viewBox="0 0 340 128" role="img" aria-label="1冊目を第1週から通しで使い、第10週から2冊目を合流させることを示した帯の絵">
+          <line x1="10" y1="26" x2="330" y2="26" stroke="#DCE4E3" stroke-width="1"/>
+          <line x1="10" y1="20" x2="10" y2="26" stroke="#56635F" stroke-width="1"/>
+          <line x1="170" y1="20" x2="170" y2="26" stroke="#56635F" stroke-width="1"/>
+          <line x1="330" y1="20" x2="330" y2="26" stroke="#56635F" stroke-width="1"/>
+          <g font-family="sans-serif" font-size="11" fill="#56635F">
+            <text x="10" y="14">第1週</text>
+            <text x="170" y="14" text-anchor="middle">第10週</text>
+            <text x="330" y="14" text-anchor="end">第20週</text>
+          </g>
+          <rect x="10" y="36" width="320" height="30" rx="3" fill="#0D5C63"/>
+          <text x="22" y="56" font-family="sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">思考方式（オレンジ）　毎週1ケース</text>
+          <rect x="170" y="76" width="160" height="30" rx="3" fill="#D4E3E3"/>
+          <text x="182" y="96" font-family="sans-serif" font-size="13" font-weight="700" fill="#14201E">文末表現（黄緑）</text>
+          <text x="10" y="122" font-family="sans-serif" font-size="11" fill="#56635F">ずっと1冊目が土台。2冊目はあとから足す</text>
+        </svg>
+      </div>
+      <p class="cap">最初から2冊やらないでください。9週目までは1冊目だけ。<strong>言えることは増えたが言い方が単調だと感じたとき</strong>が、2冊目を足す合図です。</p>
+
+      <div class="card tight">
+        <div class="step hot"><div class="sn">1</div><div><div class="st1">『韓国人の思考方式を知る』（オレンジ・CD付）</div><div class="st2">第1週から。手順の<strong>P1で「思考方式」を選ぶ</strong>。初対面・遅刻・誘いの断り方など、そのまま自分が使う場面ばかり。やさしいので勢いがつく</div></div></div>
+        <div class="step"><div class="sn">2</div><div><div class="st1">『会話から学ぶ韓国語の文末表現』（黄緑・CD付）</div><div class="st2">第10週から合流。手順の<strong>P1で「文末表現」を選ぶ</strong>。〜거든요／〜더라고요 など、言い方の引き出しを増やす。話題は今週のテーマのまま</div></div></div>
+      </div>
+
+      <div class="big">2冊の使い分け</div>
+      <div class="card tight">
+        <div class="qa"><div class="q">1冊目からは「話題」を借りる</div>
+          <div class="a">ケースの場面がそのまま自分の話になります。読んで、自分の話に置き換えて、60秒にする。<strong>女性同士の会話は「형」「누나」など自分の立場に言い換える</strong>こと。この置き換え作業自体が良い練習です。</div></div>
+        <div class="qa"><div class="q">2冊目からは「言い方」だけを借りる</div>
+          <div class="a">課の場面は使いません。文末表現だけを取り出し、<strong>今週のテーマの話に載せ替えます</strong>。P1の「文末表現」を選ぶと、その指示文が自動で出ます。</div></div>
+        <div class="qa"><div class="q">どちらも音声を必ず使う</div>
+          <div class="a">2冊ともCD付きで、声優の吹き込みです。<strong>発音のお手本はこの音声</strong>で取ってください。自分の録音は「中身を思い出す」ためのもので、発音のお手本にはなりません。</div></div>
+        <div class="qa"><div class="q">課は順番どおりでなくてよい</div>
+          <div class="a">今週のテーマに近い課を選んでください。ビジネスや商談の課は後回しで構いません。</div></div>
+      </div>
 
       <div class="big">土曜にやること（90分）</div>
       <div class="card tight">
@@ -631,7 +670,11 @@ function tasksFor(dow, wk){
       a.push(['先週の話を再演して録音する','何も見ずに60秒。終わったら先週の録音と聞き比べる（5分）']);
     }
     a.push(['ChatGPTで新しい会話を作る','会話の名前を「第' + wk + '週 ' + th + '」に変える']);
-    a.push(['手順のP1を送る','出てきた10個から、自分が使いそうな5個を選ぶ（10分）']);
+    if(wk < 10){
+      a.push(['『思考方式』から1ケース選び、手順のP1に貼る','「思考方式」の並びを選ぶ。出てきた10個から、使いそうな5個を選ぶ（10分）']);
+    } else {
+      a.push(['『文末表現』から1課選び、手順のP1に貼る','「文末表現」の並びを選ぶ。言い方だけを借り、話題は今週のテーマのまま（10分）']);
+    }
     a.push(['自分で60秒の原稿を書く','辞書を引いてOK、下手でOK。ここが一番効く工程（30分）']);
     a.push(['手順のP2を送って添削してもらう','モデル版と、覚えるべきかたまり5個をもらう（20分）']);
     a.push(['モデル版を5回音読する','声に出す。読むだけにしない']);
@@ -721,6 +764,17 @@ function promptList(){
     '・褒め言葉は書かないでください\n\n' +
     '【文章】\n（ここに本の韓国語を貼る）';
 
+  var p1bunmatsu =
+    head + '\n\n' +
+    '以下の韓国語の会話から、話し言葉で使える「文末表現」を抜き出してください。\n' +
+    'そのうえで、その文末表現を「' + th + '」の話で使うとどうなるか、例文を1つずつ作ってください。\n\n' +
+    '条件：\n' +
+    '・文末表現は5個まで。よく使うものを優先する\n' +
+    '・各表現に「日本語訳」と「どんな気持ちのときに使うか」を書く\n' +
+    '・例文は私が実際に言いそうな内容にする（日本在住の会社員、53歳）\n' +
+    '・褒め言葉は書かないでください\n\n' +
+    '【会話】\n（ここに本の韓国語を貼る）';
+
   var p1theme =
     head + '\n\n' +
     '「' + th + '」について人に話すときに使える韓国語の「かたまり（決まった言い回し）」を10個出してください。\n\n' +
@@ -774,7 +828,8 @@ function promptList(){
     '長い解説は不要です。箇条書きで簡潔に。';
 
   return [
-    {n:'P1', t:'かたまりを10個もらう', w:'土曜・パソコン', body:(S.p1mode === 'book' ? p1book : p1theme), from:1},
+    {n:'P1', t:'かたまりを10個もらう', w:'土曜・パソコン',
+      body:(S.p1mode === 'book' ? p1book : (S.p1mode === 'bunmatsu' ? p1bunmatsu : p1theme)), from:1},
     {n:'P2', t:'自分の原稿を添削してもらう', w:'土曜・自分で書いたあと', body:p2, from:1},
     {n:'P3', t:'4分→3分→2分の聞き役', w:'日曜・送ってから音声ボタン', body:p3, from:1},
     {n:'P4', t:'質問役になってもらう', w:'日曜・第3週から', body:p4, from:3},
