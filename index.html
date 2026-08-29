@@ -393,9 +393,9 @@
 
       <div class="big">3つのメニューと、その順番</div>
       <div class="pic">
-        <svg viewBox="0 0 340 122" role="img" aria-label="作る、話す、聞くの3つを順番に行い、あいだに1日以上あけることを示した絵">
+        <svg viewBox="0 0 340 122" role="img" aria-label="作る、話す、聞くの3つを順番に行い、作ると話すは別の日にすることを示した絵">
           <g font-family="sans-serif" font-size="11" fill="#56635F" text-anchor="middle">
-            <text x="110" y="20">1日あける</text>
+            <text x="110" y="20">翌日以降に</text>
             <text x="232" y="20">すぐ翌日から</text>
           </g>
           <line x1="96" y1="51" x2="124" y2="51" stroke="#56635F" stroke-width="1" stroke-dasharray="3 3"/>
@@ -418,11 +418,11 @@
           <text x="334" y="112" font-family="sans-serif" font-size="11" font-weight="700" fill="#0D5C63" text-anchor="end">終わったら次のテーマへ</text>
         </svg>
       </div>
-      <p class="cap"><strong>曜日は決めなくて構いません。</strong>守るのは順番（作る→話す→聞く）と、「作る」と「話す」のあいだを1日以上あけることだけ。間をあけたほうが記憶に残るので、同じ日に続けてやるより効きます。</p>
+      <p class="cap"><strong>曜日は決めなくて構いません。</strong>守るのは順番（作る→話す→聞く）と、<strong>「作る」と「話す」を同じ日にやらない</strong>ことだけ。<strong>翌日で十分</strong>です。何日空いても構いません。</p>
 
       <div class="card tight">
         <div class="step hot"><div class="sn">作</div><div><div class="st1">作る（60〜90分）</div><div class="st2">材料を集めて、60秒の原稿を書いて、録音する。<strong>1日で終わらなくてよい</strong>。チェックは次に開いても残っています</div></div></div>
-        <div class="step hot"><div class="sn">話</div><div><div class="st1">話す（30〜40分）</div><div class="st2">4分→3分→2分。作った日とは別の日に。声が出せる時間と場所が要ります</div></div></div>
+        <div class="step hot"><div class="sn">話</div><div><div class="st1">話す（30〜40分）</div><div class="st2">4分→3分→2分。<strong>作った日の翌日以降</strong>に。声が出せる時間と場所が要ります</div></div></div>
         <div class="step"><div class="sn">聞</div><div><div class="st1">聞く（10〜30分）</div><div class="st2">自分の録音を聞いて、小声で再現する。<strong>何日でも繰り返してよい</strong>。次のテーマに進むまでずっとこれ</div></div></div>
       </div>
 
@@ -590,6 +590,8 @@
       <div class="card tight">
         <div class="qa"><div class="q">毎回P1からP5まで、全部やるの？</div>
           <div class="a">いいえ。最初の2回は<strong>P1・P2・P3の3つだけ</strong>です。P4とP5は3回目から自動で出てきます。しかも5つは別々の宿題ではなく、<strong>1つの会話の中で上から順に使う</strong>だけです。</div></div>
+        <div class="qa"><div class="q">「翌日以降」とは中1日のこと？</div>
+          <div class="a">いいえ、<strong>翌日で十分</strong>です。避けたいのは「同じ日に続けてやる」ことだけ。同じ日だと原稿を覚えたまま話すことになり、思い出す練習になりません。何日空くぶんには問題ありません。忘れていたら、話す前に原稿をざっと読み返してから始めてください。</div></div>
         <div class="qa"><div class="q">韓国語で60秒も書けない</div>
           <div class="a">先に日本語で書いて、それを1文ずつ韓国語にしてください。分からない言い方はChatGPTに聞いてよいです。ただし、まるごと書かせないこと。<strong>3行しか書けなくても、自分で書いたなら成功</strong>です。</div></div>
         <div class="qa"><div class="q">話している途中で詰まって、黙ってしまう</div>
@@ -775,7 +777,7 @@ function shownMenu(){ return S.view === "auto" ? autoMenu() : S.view; }
 
 var STAGE_MSG = [
   "いま：材料づくりの途中。作り終えたら「話す」へ",
-  "作り終えました。次は「話す」。1日あけると効きます",
+  "作り終えました。次は「話す」。同じ日にやらず、翌日以降に",
   "話し終えました。あとは数日「聞く」で寝かせます"
 ];
 
