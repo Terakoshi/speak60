@@ -108,6 +108,19 @@
     display:inline-block;background:var(--soft);color:var(--accent);
     font-size:12px;font-weight:700;border-radius:5px;padding:2px 8px;margin-bottom:8px;
   }
+  /* 3つのメニュー切り替え */
+  .msel{display:flex;gap:6px;margin-bottom:10px;}
+  .msel button{
+    -webkit-appearance:none;appearance:none;border:none;font-family:inherit;
+    flex:1;padding:10px 4px;border-radius:10px;background:#E7EDEC;color:var(--sub);
+    cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;
+    transition:background .12s;
+  }
+  .msel button .m1{font-size:15px;font-weight:700;line-height:1.4;}
+  .msel button .m2{font-size:11px;line-height:1.5;}
+  .msel button.fin{background:#DDEFE5;color:var(--done);}
+  .msel button.on{background:var(--accent);color:#fff;}
+  .msel button.on .m2{color:var(--soft);}
   .themebar{
     background:var(--accent);color:#fff;border-radius:12px;
     padding:12px 14px;margin-bottom:10px;
@@ -279,15 +292,21 @@
         <div class="lb" id="tdDate"></div>
         <div class="nm" id="tdTheme"></div>
       </div>
+      <div class="msel" id="tdMenu">
+        <button data-m="make"><span class="m1">作る</span><span class="m2">60〜90分</span></button>
+        <button data-m="speak"><span class="m1">話す</span><span class="m2">30〜40分</span></button>
+        <button data-m="soak"><span class="m1">聞く</span><span class="m2">10〜30分</span></button>
+      </div>
       <div class="daytag" id="tdTag"></div>
       <div class="card tight" id="tdList"></div>
       <p class="lead" id="tdNote"></p>
+      <button class="btn" id="nextCycle" style="display:none">この回を終えて、次のテーマへ</button>
     </div>
 
     <!-- ══ 手順 ══ -->
     <div class="pane" id="p-prompt">
       <p class="lead">
-        1週間につきChatGPTの会話を<strong>1つだけ</strong>作り、その中で上から順に使います。
+        1つのテーマにつきChatGPTの会話を<strong>1つだけ</strong>作り、その中で上から順に使います。
         別々の作業ではなく、ひと続きの流れです。
       </p>
       <div class="toggle" id="p1mode">
@@ -302,7 +321,7 @@
     <!-- ══ ネタ帳 ══ -->
     <div class="pane" id="p-topic">
       <p class="lead">
-        20テーマを1つずつ60秒の独話にします。一度作れば旅行でも言語交換でも一生使えます。
+        20テーマを1つずつ60秒の独話にします。1テーマが1回です。一度作れば旅行でも言語交換でも一生使えます。
         タップすると原稿を書き留められます。
       </p>
       <div id="topics"></div>
@@ -331,8 +350,10 @@
 
       <h2>設定</h2>
       <div class="card">
-        <div class="fld"><label>学習を始めた土曜日</label><input type="date" id="stStart"></div>
-        <p class="mini2" style="margin-bottom:12px;">この日付から「第何週」を数えます。</p>
+        <div class="fld"><label>今は第何回目ですか</label><input type="number" id="stCycle" inputmode="numeric" min="1"></div>
+        <p class="mini2" style="margin-bottom:12px;">テーマ1つが1回です。ふつうは「今日」の下にある<strong>「この回を終えて、次のテーマへ」</strong>で自動的に進みます。ずれたときだけ直してください。</p>
+        <div class="fld"><label>学習を始めた日</label><input type="date" id="stStart"></div>
+        <p class="mini2" style="margin-bottom:12px;">記録の表示に使うだけです。進み具合には影響しません。</p>
         <div class="row">
           <button class="btn sub mini" id="stExport" style="flex:1">データを書き出す</button>
           <button class="btn sub mini" id="stImport" style="flex:1">データを読み込む</button>
@@ -370,33 +391,57 @@
       </div>
       <p class="cap">たまっている量は、もう十分。これから太くするのは「道」のほうです。だから、やることは1つだけ ── 口から出す。</p>
 
-      <div class="big">1週間の形</div>
+      <div class="big">3つのメニューと、その順番</div>
       <div class="pic">
-        <svg viewBox="0 0 340 110" role="img" aria-label="土曜と日曜と翌土曜は声を出し、月曜から金曜は聞くだけ、という1週間の形">
-          <circle cx="26" cy="40" r="17" fill="#0D5C63"/>
-          <circle cx="72" cy="40" r="17" fill="#0D5C63"/>
-          <circle cx="112" cy="40" r="8" fill="#D4E3E3"/>
-          <circle cx="140" cy="40" r="8" fill="#D4E3E3"/>
-          <circle cx="168" cy="40" r="8" fill="#D4E3E3"/>
-          <circle cx="196" cy="40" r="8" fill="#D4E3E3"/>
-          <circle cx="224" cy="40" r="8" fill="#D4E3E3"/>
-          <circle cx="270" cy="40" r="17" fill="#0D5C63"/>
-          <g font-family="sans-serif" font-size="12" fill="#56635F" text-anchor="middle">
-            <text x="26" y="70">土</text><text x="72" y="70">日</text>
-            <text x="112" y="70">月</text><text x="140" y="70">火</text><text x="168" y="70">水</text>
-            <text x="196" y="70">木</text><text x="224" y="70">金</text><text x="270" y="70">土</text>
+        <svg viewBox="0 0 340 122" role="img" aria-label="作る、話す、聞くの3つを順番に行い、あいだに1日以上あけることを示した絵">
+          <g font-family="sans-serif" font-size="11" fill="#56635F" text-anchor="middle">
+            <text x="110" y="20">1日あける</text>
+            <text x="232" y="20">すぐ翌日から</text>
           </g>
-          <g font-family="sans-serif" font-size="12" font-weight="700" fill="#14201E" text-anchor="middle">
-            <text x="26" y="94">つくる</text><text x="72" y="94">しゃべる</text>
-            <text x="168" y="94">きく</text><text x="270" y="94">もういちど</text>
+          <line x1="96" y1="51" x2="124" y2="51" stroke="#56635F" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="218" y1="51" x2="246" y2="51" stroke="#56635F" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <rect x="6" y="34" width="86" height="34" rx="3" fill="#0D5C63"/>
+          <rect x="128" y="34" width="86" height="34" rx="3" fill="#0D5C63"/>
+          <rect x="250" y="34" width="84" height="34" rx="3" fill="#D4E3E3"/>
+
+          <g font-family="sans-serif" font-size="15" font-weight="700" text-anchor="middle">
+            <text x="49" y="56" fill="#FFFFFF">作る</text>
+            <text x="171" y="56" fill="#FFFFFF">話す</text>
+            <text x="292" y="56" fill="#14201E">聞く</text>
           </g>
+          <g font-family="sans-serif" font-size="11" fill="#56635F" text-anchor="middle">
+            <text x="49" y="88">60〜90分</text>
+            <text x="171" y="88">30〜40分</text>
+            <text x="292" y="88">10〜30分を数日</text>
+          </g>
+          <text x="334" y="112" font-family="sans-serif" font-size="11" font-weight="700" fill="#0D5C63" text-anchor="end">終わったら次のテーマへ</text>
         </svg>
       </div>
-      <p class="cap">濃い丸が「声を出す日」、薄い丸が「聞くだけの日」。平日は新しいことを何もしません。</p>
+      <p class="cap"><strong>曜日は決めなくて構いません。</strong>守るのは順番（作る→話す→聞く）と、「作る」と「話す」のあいだを1日以上あけることだけ。間をあけたほうが記憶に残るので、同じ日に続けてやるより効きます。</p>
+
+      <div class="card tight">
+        <div class="step hot"><div class="sn">作</div><div><div class="st1">作る（60〜90分）</div><div class="st2">材料を集めて、60秒の原稿を書いて、録音する。<strong>1日で終わらなくてよい</strong>。チェックは次に開いても残っています</div></div></div>
+        <div class="step hot"><div class="sn">話</div><div><div class="st1">話す（30〜40分）</div><div class="st2">4分→3分→2分。作った日とは別の日に。声が出せる時間と場所が要ります</div></div></div>
+        <div class="step"><div class="sn">聞</div><div><div class="st1">聞く（10〜30分）</div><div class="st2">自分の録音を聞いて、小声で再現する。<strong>何日でも繰り返してよい</strong>。次のテーマに進むまでずっとこれ</div></div></div>
+      </div>
+
+      <div class="big">時間が取れた日は、前倒ししてよい</div>
+      <p class="say">アプリは<strong>進み具合</strong>で今やることを出します。曜日では決めていません。</p>
+      <div class="card tight">
+        <div class="qa"><div class="q">基本の割り当て（目安）</div>
+          <div class="a">土曜に「作る」、日曜に「話す」、平日は通勤で「聞く」。これがいちばん回しやすい形です。</div></div>
+        <div class="qa"><div class="q">平日に時間が取れたら</div>
+          <div class="a">「今日」の上にある<strong>3つのボタンを自分で押せば</strong>、どのメニューにも切り替わります。火曜に「作る」、木曜に「話す」でも構いません。<strong>1回に何日かけてもよい</strong>ので、週2テーマ進めても、10日で1テーマでも成立します。</div></div>
+        <div class="qa"><div class="q">押したボタンを戻したいとき</div>
+          <div class="a">同じボタンをもう一度押すと、進み具合に合わせた自動表示に戻ります。</div></div>
+        <div class="qa"><div class="q">1回を終えるとき</div>
+          <div class="a">「話す」まで全部チェックが付くと、いちばん下に<strong>「この回を終えて、次のテーマへ」</strong>が出ます。押すまでは「聞く」を何日でも続けられます。急がなくて構いません。</div></div>
+      </div>
 
       <div class="big">どの本を使うか</div>
       <div class="pic">
-        <svg viewBox="0 0 340 128" role="img" aria-label="手持ちの本を、毎週使う会話文の山、日曜に語り直す読み物の山、引くだけの参照棚の3つに分ける絵">
+        <svg viewBox="0 0 340 128" role="img" aria-label="手持ちの本を、毎回使う会話文の山、語り直す読み物の山、引くだけの参照棚の3つに分ける絵">
           <rect x="10" y="16" width="18" height="56" rx="2" fill="#0D5C63"/>
           <rect x="32" y="16" width="18" height="56" rx="2" fill="#0D5C63"/>
           <rect x="54" y="16" width="18" height="56" rx="2" fill="#0D5C63"/>
@@ -415,7 +460,7 @@
             <text x="52" y="94">会話文</text><text x="167" y="94">読み物</text><text x="273" y="94">文法書</text>
           </g>
           <g font-family="sans-serif" font-size="11" fill="#56635F" text-anchor="middle">
-            <text x="52" y="114">毎週1ページ</text><text x="167" y="114">日曜に語り直す</text><text x="273" y="114">引くだけ</text>
+            <text x="52" y="114">1回に1ページ</text><text x="167" y="114">読んで語り直す</text><text x="273" y="114">引くだけ</text>
           </g>
         </svg>
       </div>
@@ -439,32 +484,32 @@
         <div class="step"><div class="sn">5</div><div><div class="st1">その話題を、自分の話に置き換えられる</div><div class="st2">仕事、町、家族、休日、食べ物、健康、旅行など</div></div></div>
       </div>
       <p class="cap">とくに3番。難しい本を選ぶと翻訳作業になってしまい、話す練習まで届きません。迷ったら手持ちで<strong>いちばんやさしい会話中心の本</strong>を。物足りないくらいでちょうどよいです。</p>
-      <p class="cap"><strong>選んだら毎週取り替えないこと。</strong>1冊から毎週1ページずつ、20週かけて使い切るのが理想です。本を替えると言い回しの傾向が変わり、積み上がりません。</p>
+      <p class="cap"><strong>選んだら途中で取り替えないこと。</strong>1冊から1回に1ページずつ、20回かけて使い切るのが理想です。本を替えると言い回しの傾向が変わり、積み上がりません。</p>
 
       <div class="big">使うのはこの2冊</div>
       <div class="pic">
-        <svg viewBox="0 0 340 128" role="img" aria-label="1冊目を第1週から通しで使い、第10週から2冊目を合流させることを示した帯の絵">
+        <svg viewBox="0 0 340 128" role="img" aria-label="1冊目を第1回から通しで使い、第10回から2冊目を合流させることを示した帯の絵">
           <line x1="10" y1="26" x2="330" y2="26" stroke="#DCE4E3" stroke-width="1"/>
           <line x1="10" y1="20" x2="10" y2="26" stroke="#56635F" stroke-width="1"/>
           <line x1="170" y1="20" x2="170" y2="26" stroke="#56635F" stroke-width="1"/>
           <line x1="330" y1="20" x2="330" y2="26" stroke="#56635F" stroke-width="1"/>
           <g font-family="sans-serif" font-size="11" fill="#56635F">
-            <text x="10" y="14">第1週</text>
-            <text x="170" y="14" text-anchor="middle">第10週</text>
-            <text x="330" y="14" text-anchor="end">第20週</text>
+            <text x="10" y="14">第1回</text>
+            <text x="170" y="14" text-anchor="middle">第10回</text>
+            <text x="330" y="14" text-anchor="end">第20回</text>
           </g>
           <rect x="10" y="36" width="320" height="30" rx="3" fill="#0D5C63"/>
-          <text x="22" y="56" font-family="sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">思考方式（オレンジ）　毎週1ケース</text>
+          <text x="22" y="56" font-family="sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">思考方式（オレンジ）　1回に1ケース</text>
           <rect x="170" y="76" width="160" height="30" rx="3" fill="#D4E3E3"/>
           <text x="182" y="96" font-family="sans-serif" font-size="13" font-weight="700" fill="#14201E">文末表現（黄緑）</text>
           <text x="10" y="122" font-family="sans-serif" font-size="11" fill="#56635F">ずっと1冊目が土台。2冊目はあとから足す</text>
         </svg>
       </div>
-      <p class="cap">最初から2冊やらないでください。9週目までは1冊目だけ。<strong>言えることは増えたが言い方が単調だと感じたとき</strong>が、2冊目を足す合図です。</p>
+      <p class="cap">最初から2冊やらないでください。9回目までは1冊目だけ。<strong>言えることは増えたが言い方が単調だと感じたとき</strong>が、2冊目を足す合図です。</p>
 
       <div class="card tight">
-        <div class="step hot"><div class="sn">1</div><div><div class="st1">『韓国人の思考方式を知る』（オレンジ・CD付）</div><div class="st2">第1週から。手順の<strong>P1で「思考方式」を選ぶ</strong>。初対面・遅刻・誘いの断り方など、そのまま自分が使う場面ばかり。やさしいので勢いがつく</div></div></div>
-        <div class="step"><div class="sn">2</div><div><div class="st1">『会話から学ぶ韓国語の文末表現』（黄緑・CD付）</div><div class="st2">第10週から合流。手順の<strong>P1で「文末表現」を選ぶ</strong>。〜거든요／〜더라고요 など、言い方の引き出しを増やす。話題は今週のテーマのまま</div></div></div>
+        <div class="step hot"><div class="sn">1</div><div><div class="st1">『韓国人の思考方式を知る』（オレンジ・CD付）</div><div class="st2">第1回から。手順の<strong>P1で「思考方式」を選ぶ</strong>。初対面・遅刻・誘いの断り方など、そのまま自分が使う場面ばかり。やさしいので勢いがつく</div></div></div>
+        <div class="step"><div class="sn">2</div><div><div class="st1">『会話から学ぶ韓国語の文末表現』（黄緑・CD付）</div><div class="st2">第10回から合流。手順の<strong>P1で「文末表現」を選ぶ</strong>。〜거든요／〜더라고요 など、言い方の引き出しを増やす。話題はその回のテーマのまま</div></div></div>
       </div>
 
       <div class="big">2冊の使い分け</div>
@@ -472,25 +517,25 @@
         <div class="qa"><div class="q">1冊目からは「話題」を借りる</div>
           <div class="a">ケースの場面がそのまま自分の話になります。読んで、自分の話に置き換えて、60秒にする。<strong>女性同士の会話は「형」「누나」など自分の立場に言い換える</strong>こと。この置き換え作業自体が良い練習です。</div></div>
         <div class="qa"><div class="q">2冊目からは「言い方」だけを借りる</div>
-          <div class="a">課の場面は使いません。文末表現だけを取り出し、<strong>今週のテーマの話に載せ替えます</strong>。P1の「文末表現」を選ぶと、その指示文が自動で出ます。</div></div>
+          <div class="a">課の場面は使いません。文末表現だけを取り出し、<strong>その回のテーマの話に載せ替えます</strong>。P1の「文末表現」を選ぶと、その指示文が自動で出ます。</div></div>
         <div class="qa"><div class="q">どちらも音声を必ず使う</div>
           <div class="a">2冊ともCD付きで、声優の吹き込みです。<strong>発音のお手本はこの音声</strong>で取ってください。自分の録音は「中身を思い出す」ためのもので、発音のお手本にはなりません。</div></div>
         <div class="qa"><div class="q">課は順番どおりでなくてよい</div>
-          <div class="a">今週のテーマに近い課を選んでください。ビジネスや商談の課は後回しで構いません。</div></div>
+          <div class="a">その回のテーマに近い課を選んでください。ビジネスや商談の課は後回しで構いません。</div></div>
       </div>
 
-      <div class="big">土曜にやること（90分）</div>
+      <div class="big">「作る」でやること（60〜90分）</div>
       <div class="card tight">
-        <div class="step"><div class="sn">1</div><div><div class="st1">「ネタ帳」で今週の話を選ぶ</div><div class="st2">1週目は「仕事の内容」。タップして「今週のテーマにする」を押す</div></div></div>
+        <div class="step"><div class="sn">1</div><div><div class="st1">「ネタ帳」で今回の話を選ぶ</div><div class="st2">1回目は「仕事の内容」。タップして「今回のテーマにする」を押す</div></div></div>
         <div class="step"><div class="sn">2</div><div><div class="st1">「手順」のP1をコピーして、ChatGPTに貼る</div><div class="st2">出てきた10個から、使いそうな5個を選ぶ</div></div></div>
         <div class="step hot"><div class="sn">3</div><div><div class="st1">自分で韓国語を60秒ぶん書く</div><div class="st2">ここが本番。辞書を引いてよい。下手でよい。30分かけてよい</div></div></div>
         <div class="step"><div class="sn">4</div><div><div class="st1">「手順」のP2をコピーして、書いた韓国語と一緒に送る</div><div class="st2">直した文（モデル版）が返ってくる</div></div></div>
         <div class="step"><div class="sn">5</div><div><div class="st1">モデル版を5回、声に出して読む</div><div class="st2">目で追うだけにしない</div></div></div>
-        <div class="step"><div class="sn">6</div><div><div class="st1">ボイスメモで1回だけ録音する</div><div class="st2">つっかえてもそのまま。これが来週5日間の教材になる</div></div></div>
+        <div class="step"><div class="sn">6</div><div><div class="st1">ボイスメモで1回だけ録音する</div><div class="st2">つっかえてもそのまま。これがこの回の教材になる</div></div></div>
       </div>
       <p class="cap">3番だけが本当の練習で、あとは準備です。ここをChatGPTに書かせてしまうと、何も起きません。</p>
 
-      <div class="big">日曜にやること（40分）</div>
+      <div class="big">「話す」でやること（30〜40分）</div>
       <div class="pic">
         <svg viewBox="0 0 340 128" role="img" aria-label="同じ話を4分、3分、2分と短くしながら3回話すことを示した棒の絵">
           <text x="4" y="32" font-family="sans-serif" font-size="12" fill="#56635F">1回目</text>
@@ -505,14 +550,14 @@
         </svg>
       </div>
       <div class="card tight">
-        <div class="step"><div class="sn">1</div><div><div class="st1">昨日と同じ会話を、iPhoneのChatGPTで開く</div><div class="st2">履歴に「第1週 仕事の内容」が残っている</div></div></div>
+        <div class="step"><div class="sn">1</div><div><div class="st1">作ったときと同じ会話を、iPhoneのChatGPTで開く</div><div class="st2">履歴に「第1回 仕事の内容」が残っている</div></div></div>
         <div class="step"><div class="sn">2</div><div><div class="st1">「手順」のP3をコピーして、文字で送る</div><div class="st2">先に文字。ここで音声ボタンを押さない</div></div></div>
         <div class="step hot"><div class="sn">3</div><div><div class="st1">音声のボタンを押して、同じ話を3回する</div><div class="st2">原稿は見ない。上の絵のとおり、だんだん短くする</div></div></div>
         <div class="step"><div class="sn">4</div><div><div class="st1">文字に戻して「まとめをください」と送る</div><div class="st2">直しはここで初めて受け取る</div></div></div>
       </div>
       <p class="cap">なぜ短くするのか ── 時間が減ると、考えている余裕がなくなり、かたまりのまま出てくるようになるからです。3回目がいちばん楽に感じます。</p>
 
-      <div class="big">月曜から金曜（30分）</div>
+      <div class="big">「聞く」でやること（10〜30分）</div>
       <div class="pic">
         <svg viewBox="0 0 340 104" role="img" aria-label="通勤の往復30分を、聞く時間と口を動かす時間に分けた帯の絵">
           <text x="101" y="16" font-family="sans-serif" font-size="12" font-weight="700" fill="#14201E" text-anchor="middle">行き</text>
@@ -534,39 +579,39 @@
         </svg>
       </div>
       <div class="card tight">
-        <div class="step"><div class="sn">1</div><div><div class="st1">行きの電車：自分の録音を3回聞く</div><div class="st2">口は動かさず、頭の中で一緒に言う</div></div></div>
-        <div class="step"><div class="sn">2</div><div><div class="st1">行きの徒歩：小さい声で言ってみる</div><div class="st2">何も見ない。思い出せない所は飛ばす</div></div></div>
-        <div class="step"><div class="sn">3</div><div><div class="st1">帰りの電車：ドラマや本の音声を聞き流す</div><div class="st2">分からなくてよい</div></div></div>
-        <div class="step"><div class="sn">4</div><div><div class="st1">帰りの徒歩：今日のことを韓国語で1つ</div><div class="st2">うまく言えなくてよい</div></div></div>
+        <div class="step"><div class="sn">1</div><div><div class="st1">自分の録音を3回聞く（電車で10分）</div><div class="st2">口は動かさず、頭の中で一緒に言う</div></div></div>
+        <div class="step"><div class="sn">2</div><div><div class="st1">小さい声で言ってみる（徒歩で5分）</div><div class="st2">何も見ない。思い出せない所は飛ばす</div></div></div>
+        <div class="step"><div class="sn">3</div><div><div class="st1">ドラマや本の音声を聞き流す（帰りの電車で10分）</div><div class="st2">分からなくてよい</div></div></div>
+        <div class="step"><div class="sn">4</div><div><div class="st1">今日のことを韓国語で1つ（帰りの徒歩で5分）</div><div class="st2">うまく言えなくてよい</div></div></div>
       </div>
-      <p class="cap">聞いたあとに必ず口を動かす、という順番だけ守ってください。聞くだけで終わると、そこで止まります。</p>
+      <p class="cap">聞いたあとに必ず口を動かす、という順番だけ守ってください。通勤に限らず、すきま時間ならいつでも構いません。</p>
 
       <div class="big">よくある心配</div>
       <div class="card tight">
         <div class="qa"><div class="q">毎回P1からP5まで、全部やるの？</div>
-          <div class="a">いいえ。最初の2週間は<strong>P1・P2・P3の3つだけ</strong>です。P4とP5は3週目から自動で出てきます。しかも5つは別々の宿題ではなく、<strong>1つの会話の中で上から順に使う</strong>だけです。</div></div>
+          <div class="a">いいえ。最初の2回は<strong>P1・P2・P3の3つだけ</strong>です。P4とP5は3回目から自動で出てきます。しかも5つは別々の宿題ではなく、<strong>1つの会話の中で上から順に使う</strong>だけです。</div></div>
         <div class="qa"><div class="q">韓国語で60秒も書けない</div>
           <div class="a">先に日本語で書いて、それを1文ずつ韓国語にしてください。分からない言い方はChatGPTに聞いてよいです。ただし、まるごと書かせないこと。<strong>3行しか書けなくても、自分で書いたなら成功</strong>です。</div></div>
         <div class="qa"><div class="q">話している途中で詰まって、黙ってしまう</div>
           <div class="a">黙ってよいです。P3の指示文に「黙って待って」と書いてあるので、相手は急かしません。<strong>詰まった箇所こそが、次に覚えるべき場所</strong>です。</div></div>
-        <div class="qa"><div class="q">平日、疲れて何もできなかった</div>
-          <div class="a">平日は<strong>聞くだけで合格</strong>です。イヤホンをして再生ボタンを押せば、その日は達成。ゼロにしないことだけが目的です。</div></div>
-        <div class="qa"><div class="q">週末に用事が入って、まるごと飛んだ</div>
-          <div class="a">同じテーマのまま次の週末に持ち越してください。<strong>新しいテーマに進まない</strong>ことだけ守れば、遅れではありません。</div></div>
+        <div class="qa"><div class="q">疲れて何もできなかった日がある</div>
+          <div class="a"><strong>聞くだけで合格</strong>です。イヤホンをして再生ボタンを押せば、その日は達成。ゼロにしないことだけが目的です。</div></div>
+        <div class="qa"><div class="q">何日も空いてしまった</div>
+          <div class="a">同じテーマのまま、空いた日から続けてください。チェックは残っています。<strong>新しいテーマに進まない</strong>ことだけ守れば、遅れではありません。1回に何日かけても構いません。</div></div>
         <div class="qa"><div class="q">声を出せる環境がない</div>
           <div class="a">話す作業を「同じ内容を10分・7分・5分で3回<strong>書く</strong>」に置き換えます。録音だけは、車の中など出せる時に確保してください。</div></div>
       </div>
 
       <div class="big">このアプリの見方</div>
       <div class="card tight">
-        <div class="step"><div class="sn">今</div><div><div class="st1">今日</div><div class="st2">今日やることだけが出る。終わったらタップして消す。それ以外は考えなくてよい</div></div></div>
+        <div class="step"><div class="sn">今</div><div><div class="st1">今日</div><div class="st2">進み具合に合わせて、今やることが出る。上の3つのボタンで「作る／話す／聞く」を自分で選べる</div></div></div>
         <div class="step"><div class="sn">手</div><div><div class="st1">手順</div><div class="st2">ChatGPTに貼る文。開いて「コピーする」を押し、ChatGPTに貼るだけ。テーマ名は自動で入る</div></div></div>
-        <div class="step"><div class="sn">ネ</div><div><div class="st1">ネタ帳</div><div class="st2">20個の話の一覧。今週どれをやるか選ぶ場所。書いた原稿もここに残せる</div></div></div>
+        <div class="step"><div class="sn">ネ</div><div><div class="st1">ネタ帳</div><div class="st2">20個の話の一覧。今どれをやるか選ぶ場所。書いた原稿もここに残せる</div></div></div>
         <div class="step"><div class="sn">記</div><div><div class="st1">記録</div><div class="st2">月に1回だけ使う。準備なしで60秒話し、語数・沈黙・言い直しを数えて入れる</div></div></div>
       </div>
 
       <div class="big">最初の一歩</div>
-      <p class="say">土曜の朝、パソコンの前に座ったら ──<br>
+      <p class="say">まとまった時間が取れたら ──<br>
       このアプリの「今日」を開いて、いちばん上の行から順に、書いてあるとおりにやってください。<br>
       考えることは何もありません。</p>
 
@@ -623,10 +668,13 @@ var TOPICS = [
 function initState(){
   return {
     start:'2026-08-29',
+    cycle:1,            // 第何回目か（テーマ1つ＝1回）。曜日とは無関係
     current:0,
     p1mode:'book',
+    view:'auto',        // 今日どのメニューを見るか。auto は進み具合から決める
     topics:TOPICS.map(function(t){ return {status:0, memo:''}; }),
-    checks:{},
+    doneCycle:{},       // 「作る」「話す」のチェック。回ごとに残る（日をまたいでよい）
+    checks:{},          // 「聞く」のチェック。日付ごと（毎日やり直す）
     logs:[]
   };
 }
@@ -635,6 +683,10 @@ var S;
 try{ S = JSON.parse(localStorage.getItem(KEY)) || initState(); }
 catch(e){ S = initState(); }
 if(!S.topics || S.topics.length !== TOPICS.length){ S = initState(); }
+// 古い版から引き継ぐときの補い
+if(typeof S.cycle !== 'number') S.cycle = 1;
+if(!S.doneCycle) S.doneCycle = {};
+if(!S.view) S.view = 'auto';
 
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
@@ -650,100 +702,128 @@ var WD = ['日','月','火','水','木','金','土'];
 
 function today(){ return new Date(); }
 
-function weekNo(){
-  var st = parseYmd(S.start);
-  st.setHours(0,0,0,0);
+function cycleNo(){ return Math.max(1, S.cycle || 1); }
+
+function daysFromStart(){
+  var st = parseYmd(S.start); st.setHours(0,0,0,0);
   var td = today(); td.setHours(0,0,0,0);
-  var diff = Math.floor((td - st) / 86400000);
-  if(diff < 0) return 0;              // まだ始まっていない
-  return Math.floor(diff / 7) + 1;
+  return Math.floor((td - st) / 86400000);
 }
 
 /* ══════════════════════════════════════════════
    今日やること
    ══════════════════════════════════════════════ */
-function tasksFor(dow, wk){
+function menuTasks(m){
+  var cyc = cycleNo();
   var th = TOPICS[S.current][1];
-  if(dow === 6){                       // 土曜＝仕込み
+
+  if(m === "make"){                       // 作る（材料づくり）
     var a = [];
-    if(wk >= 2){
-      a.push(['先週の話を再演して録音する','何も見ずに60秒。終わったら先週の録音と聞き比べる（5分）']);
+    if(cyc >= 2){
+      a.push(["前回の話を再演して録音する","何も見ずに60秒。終わったら前回の録音と聞き比べる（5分）"]);
     }
-    a.push(['ChatGPTで新しい会話を作る','会話の名前を「第' + wk + '週 ' + th + '」に変える']);
-    if(wk < 10){
-      a.push(['『思考方式』から1ケース選び、手順のP1に貼る','「思考方式」の並びを選ぶ。出てきた10個から、使いそうな5個を選ぶ（10分）']);
+    a.push(["ChatGPTで新しい会話を作る","会話の名前を「第" + cyc + "回 " + th + "」に変える"]);
+    if(cyc < 10){
+      a.push(["『思考方式』から1ケース選び、手順のP1に貼る","「思考方式」の並びを選ぶ。出てきた10個から、使いそうな5個を選ぶ（10分）"]);
     } else {
-      a.push(['『文末表現』から1課選び、手順のP1に貼る','「文末表現」の並びを選ぶ。言い方だけを借り、話題は今週のテーマのまま（10分）']);
+      a.push(["『文末表現』から1課選び、手順のP1に貼る","「文末表現」の並びを選ぶ。言い方だけを借り、話題は今回のテーマのまま（10分）"]);
     }
-    a.push(['自分で60秒の原稿を書く','辞書を引いてOK、下手でOK。ここが一番効く工程（30分）']);
-    a.push(['手順のP2を送って添削してもらう','モデル版と、覚えるべきかたまり5個をもらう（20分）']);
-    a.push(['モデル版を5回音読する','声に出す。読むだけにしない']);
-    a.push(['ボイスメモで1回録音する','これが来週5日間の教材のすべて。撮り直さない']);
-    a.push(['残り時間はBの山を読む','辞書は引かない。分からない所は飛ばす']);
+    a.push(["自分で60秒の原稿を書く","辞書を引いてOK、下手でOK。ここが一番効く工程（30分）"]);
+    a.push(["手順のP2を送って添削してもらう","モデル版と、覚えるべきかたまり5個をもらう（20分）"]);
+    a.push(["モデル版を5回音読する","声に出す。読むだけにしない"]);
+    a.push(["ボイスメモで1回録音する","これがこの回の教材のすべて。撮り直さない"]);
     return a;
   }
-  if(dow === 0){                       // 日曜＝本番
+
+  if(m === "speak"){                      // 話す（本番）
     var b = [
-      ['iPhoneで昨日と同じ会話を開く','ChatGPTの履歴から「第' + wk + '週 ' + th + '」を選ぶ'],
-      ['手順のP3を文字で送る','音声ボタンを押す前に、まず文字で送ること'],
-      ['音声ボタンを押して4分→3分→2分','同じ話を3回。原稿は見ない。3回目がいちばん滑らかになる（30分）'],
-      ['文字に戻して、まとめをもらう','訂正はここで初めて受け取る']
+      ["作ったときと同じ会話を開く","ChatGPTの履歴から「第" + cyc + "回 " + th + "」を選ぶ"],
+      ["手順のP3を文字で送る","音声ボタンを押す前に、まず文字で送ること"],
+      ["音声ボタンを押して4分→3分→2分","同じ話を3回。原稿は見ない。3回目がいちばん滑らかになる（30分）"],
+      ["文字に戻して、まとめをもらう","訂正はここで初めて受け取る"]
     ];
-    if(wk >= 3){
-      b.push(['手順のP4で質問してもらう','はい／いいえで答えられる質問から始めてもらう（20分）']);
-      b.push(['手順のP5で振り返る','次週までに覚えるかたまり5個を受け取る']);
+    if(cyc >= 3){
+      b.push(["手順のP4で質問してもらう","はい／いいえで答えられる質問から始めてもらう（20分）"]);
+      b.push(["手順のP5で振り返る","次の回までに覚えるかたまり5個を受け取る"]);
     }
-    b.push(['Bの山を1本読んで、閉じてから語り直す','見ないで話すのが目的。細部は飛ばしてよい（30分）']);
-    b.push(['ドラマを1話観る','後半だけ字幕を消す']);
+    b.push(["『思考方式』の別のケースを読んで、閉じてから語り直す","見ないで話すのが目的。細部は飛ばしてよい（30分）"]);
     return b;
   }
-  return [                             // 平日＝通勤
-    ['行き・電車 10分：自分の録音を3回聞く','口は動かさず、頭の中で一緒に言う'],
-    ['行き・徒歩 5分：小声で再現する','何も見ない。思い出せない所は飛ばす'],
-    ['帰り・電車 10分：ドラマか本の音源を聞く','分からなくてよい。字幕も台本も見ない'],
-    ['帰り・徒歩 5分：今日のことを韓国語で1つ','うまく言えなくてよい']
+
+  return [                                // 聞く（すり込み）
+    ["自分の録音を3回聞く","電車の中では口を動かさず、頭の中で一緒に言う（10分）"],
+    ["小声で再現する","徒歩や車の中で。何も見ない。思い出せない所は飛ばす（5分）"],
+    ["ドラマや本の音源を聞き流す","分からなくてよい。字幕も台本も見ない（10分）"],
+    ["今日のことを韓国語で1つ言ってみる","うまく言えなくてよい"]
   ];
 }
 
+/* 進み具合：0＝まだ作っていない／1＝作った、話す前／2＝話し終わった */
+function doneKey(m){ return cycleNo() + ":" + m; }
+function doneArr(m){
+  if(m === "soak") return S.checks[ymd(today())] || [];
+  return S.doneCycle[doneKey(m)] || [];
+}
+function setDone(m, arr){
+  if(m === "soak") S.checks[ymd(today())] = arr;
+  else S.doneCycle[doneKey(m)] = arr;
+}
+function isFin(m){ return doneArr(m).length >= menuTasks(m).length; }
+function stageNo(){ return !isFin("make") ? 0 : (!isFin("speak") ? 1 : 2); }
+function autoMenu(){ var s = stageNo(); return s === 0 ? "make" : (s === 1 ? "speak" : "soak"); }
+function shownMenu(){ return S.view === "auto" ? autoMenu() : S.view; }
+
+var STAGE_MSG = [
+  "いま：材料づくりの途中。作り終えたら「話す」へ",
+  "作り終えました。次は「話す」。1日あけると効きます",
+  "話し終えました。あとは数日「聞く」で寝かせます"
+];
+
 function renderToday(){
-  var d = today(), dow = d.getDay(), wk = weekNo();
-  document.getElementById('hdWeek').textContent = wk > 0 ? ('第' + wk + '週') : '開始前';
+  var cyc = cycleNo(), m = shownMenu(), st = stageNo();
+  var d = today();
 
-  document.getElementById('tdDate').textContent =
-    (d.getMonth()+1) + '月' + d.getDate() + '日（' + WD[dow] + '）　今週のテーマ';
-  document.getElementById('tdTheme').textContent = TOPICS[S.current][1];
+  document.getElementById("hdWeek").textContent = "第" + cyc + "回";
+  document.getElementById("tdDate").textContent =
+    (d.getMonth()+1) + "月" + d.getDate() + "日（" + WD[d.getDay()] + "）　今回のテーマ";
+  document.getElementById("tdTheme").textContent = TOPICS[S.current][1];
 
-  var tag = document.getElementById('tdTag');
-  tag.textContent = dow === 6 ? '土曜：仕込み' : (dow === 0 ? '日曜：本番' : '平日：通勤ですり込む');
+  document.querySelectorAll("#tdMenu button").forEach(function(b){
+    var k = b.dataset.m;
+    b.classList.toggle("on", k === m);
+    b.classList.toggle("fin", k !== m && k !== "soak" && isFin(k));
+    var lb = b.querySelector(".m2");
+    if(k === "soak") lb.textContent = "10〜30分";
+    else lb.textContent = isFin(k) ? "済" : (k === "make" ? "60〜90分" : "30〜40分");
+  });
 
-  var list = tasksFor(dow, Math.max(wk,1));
-  var key = ymd(d);
-  var doneArr = S.checks[key] || [];
+  document.getElementById("tdTag").textContent = STAGE_MSG[st];
 
-  var html = '';
+  var list = menuTasks(m), arr = doneArr(m), html = "";
   for(var i=0;i<list.length;i++){
-    var on = doneArr.indexOf(i) >= 0;
-    html += '<div class="task' + (on?' done':'') + '" data-i="' + i + '">' +
-      '<div class="box"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg></div>' +
-      '<div class="tx"><div class="t1">' + esc(list[i][0]) + '</div><div class="t2">' + esc(list[i][1]) + '</div></div>' +
-      '</div>';
+    var on = arr.indexOf(i) >= 0;
+    html += "<div class=\"task" + (on?" done":"") + "\" data-i=\"" + i + "\">" +
+      "<div class=\"box\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 7.5l3 3 6-7\"/></svg></div>" +
+      "<div class=\"tx\"><div class=\"t1\">" + esc(list[i][0]) + "</div><div class=\"t2\">" + esc(list[i][1]) + "</div></div></div>";
   }
-  var box = document.getElementById('tdList');
+  var box = document.getElementById("tdList");
   box.innerHTML = html;
-  box.querySelectorAll('.task').forEach(function(el){
-    el.addEventListener('click', function(){
-      var i = +el.dataset.i;
-      var arr = S.checks[key] || [];
-      var p = arr.indexOf(i);
-      if(p >= 0) arr.splice(p,1); else arr.push(i);
-      S.checks[key] = arr;
-      save(); renderToday();
+  box.querySelectorAll(".task").forEach(function(el){
+    el.addEventListener("click", function(){
+      var i = +el.dataset.i, a2 = doneArr(m).slice(), p = a2.indexOf(i);
+      if(p >= 0) a2.splice(p,1); else a2.push(i);
+      setDone(m, a2);
+      if(m === "make" && isFin("make") && S.topics[S.current].status < 2) S.topics[S.current].status = 2;
+      save(); renderAll();
     });
   });
 
-  var note = document.getElementById('tdNote');
-  if(dow === 6 || dow === 0) note.textContent = '声が出せない日は、話す作業を「同じ内容を10分・7分・5分で3回書く」に置き換えてよい。録音だけは飛ばさない。';
-  else note.textContent = '平日は新しいことを一切やらない。疲れた日は「聞くだけ」で合格。';
+  var note = document.getElementById("tdNote");
+  if(m === "make") note.textContent = "1日で終わらなくてよい。チェックは次に開いたときも残っています。声が出せない日は、音読と録音だけ後回しに。";
+  else if(m === "speak") note.textContent = "声が出せない日は、同じ内容を10分・7分・5分で3回「書く」に置き換えてよい。";
+  else note.textContent = "聞くだけで合格。チェックは毎日リセットされます。新しいことは何もしません。";
+
+  document.getElementById("nextCycle").style.display = (st === 2) ? "block" : "none";
 }
 
 /* ══════════════════════════════════════════════
@@ -828,17 +908,17 @@ function promptList(){
     '長い解説は不要です。箇条書きで簡潔に。';
 
   return [
-    {n:'P1', t:'かたまりを10個もらう', w:'土曜・パソコン',
+    {n:'P1', t:'かたまりを10個もらう', w:'「作る」の日・パソコン',
       body:(S.p1mode === 'book' ? p1book : (S.p1mode === 'bunmatsu' ? p1bunmatsu : p1theme)), from:1},
-    {n:'P2', t:'自分の原稿を添削してもらう', w:'土曜・自分で書いたあと', body:p2, from:1},
-    {n:'P3', t:'4分→3分→2分の聞き役', w:'日曜・送ってから音声ボタン', body:p3, from:1},
-    {n:'P4', t:'質問役になってもらう', w:'日曜・第3週から', body:p4, from:3},
-    {n:'P5', t:'会話のあとの振り返り', w:'日曜・第3週から', body:p5, from:3}
+    {n:'P2', t:'自分の原稿を添削してもらう', w:'「作る」の日・自分で書いたあと', body:p2, from:1},
+    {n:'P3', t:'4分→3分→2分の聞き役', w:'「話す」の日・送ってから音声ボタン', body:p3, from:1},
+    {n:'P4', t:'質問役になってもらう', w:'「話す」の日・第3回から', body:p4, from:3},
+    {n:'P5', t:'会話のあとの振り返り', w:'「話す」の日・第3回から', body:p5, from:3}
   ];
 }
 
 function renderPrompts(){
-  var wk = Math.max(weekNo(),1);
+  var wk = cycleNo();
   var ps = promptList();
   var box = document.getElementById('prompts');
   var html = '';
@@ -847,7 +927,7 @@ function renderPrompts(){
     var off = wk < p.from;
     html += '<div class="pcard' + (off?' off':'') + '" data-i="' + i + '">' +
       '<div class="phd"><div class="pno">' + p.n + '</div>' +
-      '<div class="pt"><div class="p1">' + esc(p.t) + '</div><div class="p2">' + esc(p.w) + (off?'（今週はまだ使いません）':'') + '</div></div>' +
+      '<div class="pt"><div class="p1">' + esc(p.t) + '</div><div class="p2">' + esc(p.w) + (off?'（この回はまだ使いません）':'') + '</div></div>' +
       '<div class="chev">開く</div></div>' +
       '<div class="pbody"><div class="ptext">' + esc(p.body) + '</div>' +
       '<button class="btn" data-copy="' + i + '">この文をコピーする</button></div></div>';
@@ -868,8 +948,8 @@ function renderPrompts(){
 
   document.getElementById('pNote').textContent =
     wk < 3
-      ? '第1〜2週はP1・P2・P3の3つだけ。P4とP5は第3週から足します。'
-      : '毎週この5つを、上から順に1つの会話の中で使います。';
+      ? '第1〜2回はP1・P2・P3の3つだけ。P4とP5は第3回から足します。'
+      : '1回につきこの5つを、上から順に1つの会話の中で使います。';
 
   document.querySelectorAll('#p1mode button').forEach(function(b){
     b.classList.toggle('on', b.dataset.m === S.p1mode);
@@ -912,7 +992,7 @@ function openTopic(i){
     '<div class="fld"><label>原稿・覚えるかたまり（自由に書く）</label>' +
     '<textarea id="shMemo" placeholder="モデル版の韓国語や、覚えるかたまり5個をここに貼っておく">' + esc(t.memo) + '</textarea></div>' +
     '<div class="row" style="margin-bottom:8px">' +
-    '<button class="btn sub" id="shCur" style="flex:1">今週のテーマにする</button>' +
+    '<button class="btn sub" id="shCur" style="flex:1">今回のテーマにする</button>' +
     '<button class="btn" id="shSave" style="flex:1">保存する</button></div>' +
     '<button class="btn sub" id="shClose">閉じる</button>';
   showSheet(h);
@@ -925,7 +1005,7 @@ function openTopic(i){
   document.getElementById('shCur').addEventListener('click', function(){
     t.status = +document.getElementById('shSt').value;
     t.memo = document.getElementById('shMemo').value;
-    S.current = i; save(); hideSheet(); renderAll(); toast('今週のテーマにしました');
+    S.current = i; save(); hideSheet(); renderAll(); toast('今回のテーマにしました');
   });
   document.getElementById('shClose').addEventListener('click', hideSheet);
 }
@@ -935,6 +1015,7 @@ function openTopic(i){
    ══════════════════════════════════════════════ */
 function renderLog(){
   document.getElementById('stStart').value = S.start;
+  document.getElementById('stCycle').value = cycleNo();
   if(!document.getElementById('lgDate').value) document.getElementById('lgDate').value = ymd(today());
 
   var box = document.getElementById('lgChart');
@@ -1039,7 +1120,41 @@ document.getElementById('lgAdd').addEventListener('click', function(){
   renderLog(); toast('記録しました');
 });
 
+/* ── 今日の3つのメニュー切り替え ── */
+document.querySelectorAll('#tdMenu button').forEach(function(b){
+  b.addEventListener('click', function(){
+    S.view = (S.view === b.dataset.m) ? 'auto' : b.dataset.m;   // もう一度押すと自動に戻る
+    save(); renderToday();
+  });
+});
+
+/* ── この回を終えて次のテーマへ ── */
+document.getElementById('nextCycle').addEventListener('click', function(){
+  showSheet('<h3>この回を終えますか</h3>' +
+    '<p class="mini2" style="margin-bottom:12px">「' + esc(TOPICS[S.current][1]) + '」を再演済みにして、次のテーマに進みます。' +
+    '次の回の最初に、この話をもう一度録音して聞き比べます。</p>' +
+    '<div class="row"><button class="btn sub" id="ncNo" style="flex:1">やめる</button>' +
+    '<button class="btn" id="ncYes" style="flex:1">次へ進む</button></div>');
+  document.getElementById('ncNo').addEventListener('click', hideSheet);
+  document.getElementById('ncYes').addEventListener('click', function(){
+    S.topics[S.current].status = 3;
+    var n = -1;
+    for(var i=1;i<=TOPICS.length;i++){
+      var j = (S.current + i) % TOPICS.length;
+      if(S.topics[j].status === 0){ n = j; break; }
+    }
+    if(n >= 0) S.current = n;
+    S.cycle = cycleNo() + 1;
+    S.view = 'auto';
+    save(); hideSheet(); renderAll(); toast('第' + S.cycle + '回を始めます');
+  });
+});
+
 /* ── 設定 ── */
+document.getElementById('stCycle').addEventListener('change', function(){
+  var v = parseInt(this.value, 10);
+  if(v > 0){ S.cycle = v; save(); renderAll(); toast('第' + v + '回にしました'); }
+});
 document.getElementById('stStart').addEventListener('change', function(){
   S.start = this.value; save(); renderAll(); toast('開始日を変えました');
 });
