@@ -235,6 +235,11 @@
   .step .st1{font-size:16px;font-weight:600;line-height:1.6;}
   .step .st2{font-size:13px;color:var(--sub);line-height:1.65;margin-top:2px;}
   .step.hot .sn{background:var(--accent);color:#fff;}
+  .tblbox{overflow-x:auto;margin:8px 0 4px;}
+  .tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:280px;}
+  .tbl th,.tbl td{text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--line);line-height:1.6;vertical-align:top;}
+  .tbl thead th{font-size:12px;color:var(--sub);font-weight:700;border-bottom:1.5px solid var(--ink);white-space:nowrap;}
+  .tbl td:first-child{white-space:nowrap;}
   .qa{padding:12px 0;border-bottom:1px solid var(--line);}
   .qa:last-child{border-bottom:none;}
   .qa .q{font-size:16px;font-weight:700;line-height:1.6;}
@@ -527,13 +532,52 @@
       <div class="big">「作る」でやること（60〜90分）</div>
       <div class="card tight">
         <div class="step"><div class="sn">1</div><div><div class="st1">「ネタ帳」で今回の話を選ぶ</div><div class="st2">1回目は「仕事の内容」。タップして「今回のテーマにする」を押す</div></div></div>
-        <div class="step"><div class="sn">2</div><div><div class="st1">「手順」のP1をコピーして、ChatGPTに貼る</div><div class="st2">出てきた10個から、使いそうな5個を選ぶ</div></div></div>
-        <div class="step hot"><div class="sn">3</div><div><div class="st1">自分で韓国語を60秒ぶん書く</div><div class="st2">ここが本番。辞書を引いてよい。下手でよい。30分かけてよい</div></div></div>
-        <div class="step"><div class="sn">4</div><div><div class="st1">「手順」のP2をコピーして、書いた韓国語と一緒に送る</div><div class="st2">直した文（モデル版）が返ってくる</div></div></div>
-        <div class="step"><div class="sn">5</div><div><div class="st1">モデル版を5回、声に出して読む</div><div class="st2">目で追うだけにしない</div></div></div>
-        <div class="step"><div class="sn">6</div><div><div class="st1">ボイスメモで1回だけ録音する</div><div class="st2">つっかえてもそのまま。これがこの回の教材になる</div></div></div>
+        <div class="step"><div class="sn">2</div><div><div class="st1">本から1ケース選び、会話の部分を写真に撮る</div><div class="st2">日常の雑談に近いケースから。順番どおりでなくてよい。手で打ち込んでもよい</div></div></div>
+        <div class="step"><div class="sn">3</div><div><div class="st1">「手順」のP1をコピーして貼り、写真も一緒に送る</div><div class="st2">読み取った韓国語が出たら、本と見比べて「合っています」と返す</div></div></div>
+        <div class="step"><div class="sn">4</div><div><div class="st1">出てきたかたまりから5個選ぶ</div><div class="st2">使い回しが利くものを優先。<strong>5〜10分で切り上げる</strong></div></div></div>
+        <div class="step hot"><div class="sn">5</div><div><div class="st1">自分で韓国語を60秒ぶん書く</div><div class="st2">ここが本番。辞書を引いてよい。下手でよい。30分かけてよい</div></div></div>
+        <div class="step"><div class="sn">6</div><div><div class="st1">「手順」のP2をコピーして、書いた韓国語と一緒に送る</div><div class="st2">直した文（モデル版）が返ってくる</div></div></div>
+        <div class="step"><div class="sn">7</div><div><div class="st1">モデル版を5回音読 → ボイスメモで1回録音</div><div class="st2">つっかえてもそのまま。これがこの回の教材になる</div></div></div>
       </div>
-      <p class="cap">3番だけが本当の練習で、あとは準備です。ここをChatGPTに書かせてしまうと、何も起きません。</p>
+      <p class="cap">5番だけが本当の練習で、あとは準備です。ここをChatGPTに書かせてしまうと、何も起きません。</p>
+
+      <div class="big">かたまり選びで迷ったら</div>
+      <div class="card tight">
+        <div class="qa"><div class="q">「かたまり」って単語のこと？</div>
+          <div class="a">単語でも文章でもなく、<strong>その中間</strong>です。「そのまま口に出せる、2〜6語ていどの決まり文句」を指します。『思考方式』のCase 1（初対面の場面）からは、実際にこれだけ取れます。
+          <div class="tblbox"><table class="tbl">
+            <thead><tr><th>かたまり</th><th>意味</th></tr></thead>
+            <tbody>
+            <tr><td>처음 뵙겠습니다</td><td>はじめまして</td></tr>
+            <tr><td>〜(이)라고 합니다</td><td>〜と申します</td></tr>
+            <tr><td>몇 년생이세요?</td><td>何年生まれですか</td></tr>
+            <tr><td>〜인데요</td><td>〜なんですけど</td></tr>
+            <tr><td>정말요?</td><td>本当ですか</td></tr>
+            <tr><td>근데 왜요?</td><td>でも、どうしてですか</td></tr>
+            <tr><td>〜아/어 보이다</td><td>〜に見える</td></tr>
+            <tr><td>이제부터는</td><td>これからは</td></tr>
+            <tr><td>〜(이)라고 부를게요</td><td>〜と呼びますね</td></tr>
+            <tr><td>그러세요</td><td>そうしてください</td></tr>
+            </tbody></table></div></div></div>
+
+        <div class="qa"><div class="q">1ページに文章量が足りない</div>
+          <div class="a">心配は要りません。上のとおり<strong>8行の会話から10個取れます</strong>。<strong>1つの文から複数のかたまりが取れる</strong>からです。たとえば 나보다 어려 보였는데, 언니네 の1文だけで「〜아/어 보이다（〜に見える）」と「〜네（〜ですね）」の2つが入っています。</div></div>
+
+        <div class="qa"><div class="q">10個のうち、どれを選べばいい？</div>
+          <div class="a">次の3つに当てはまるものを選びます。<br>
+          <strong>① 自分が言う側か</strong>（相手のセリフではなく、自分の口から出す言葉か）<br>
+          <strong>② 場面が想像できるか</strong>（「これを言う自分」が思い浮かぶか）<br>
+          <strong>③ 使い回せるか</strong>（中身を差し替えれば別の話にも使えるか）<br>
+          Case 1なら、처음 뵙겠습니다／〜(이)라고 합니다／〜인데요／정말요?／〜아/어 보이다 の5つ。
+          언니라고 부를게요 は女性同士の言い方なので捨てます。
+          <strong>迷ったら「使い回しが利くもの」を優先</strong>してください。〜인데요 のような型は、1個覚えると10回使えます。</div></div>
+
+        <div class="qa"><div class="q">5個も取れない／どれもピンとこない</div>
+          <div class="a"><strong>2ケース分</strong>をまとめて写真で送って構いません。それでもピンとこなければ<strong>別のケース</strong>に変えてください。相性の悪い課はあります。<strong>5個あれば十分</strong>で、10個は上限の目安です。</div></div>
+
+        <div class="qa"><div class="q">これでいいのか自信がない</div>
+          <div class="a">かたまり選びは主役ではありません。主役は<strong>5番の「自分で原稿を書く」</strong>です。<strong>5〜10分で切り上げてください。</strong>30分悩むくらいなら、適当に5個選んで先に進むほうが、はるかに効果があります。</div></div>
+      </div>
 
       <div class="big">「話す」でやること（30〜40分）</div>
       <div class="pic">
@@ -724,12 +768,14 @@ function menuTasks(m){
     if(cyc >= 2){
       a.push(["前回の話を再演して録音する","何も見ずに60秒。終わったら前回の録音と聞き比べる（5分）"]);
     }
-    a.push(["ChatGPTで新しい会話を作る","会話の名前を「第" + cyc + "回 " + th + "」に変える"]);
     if(cyc < 10){
-      a.push(["『思考方式』から1ケース選び、手順のP1に貼る","「思考方式」の並びを選ぶ。出てきた10個から、使いそうな5個を選ぶ（10分）"]);
+      a.push(["『思考方式』から1ケース選び、会話の部分を写真に撮る","日常の雑談に近いケースから。順番どおりでなくてよい"]);
     } else {
-      a.push(["『文末表現』から1課選び、手順のP1に貼る","「文末表現」の並びを選ぶ。言い方だけを借り、話題は今回のテーマのまま（10分）"]);
+      a.push(["『文末表現』から1課選び、会話の部分を写真に撮る","言い方だけを借り、話題は今回のテーマのまま"]);
     }
+    a.push(["ChatGPTで新しい会話を作り、P1と写真を送る","会話の名前を「第" + cyc + "回 " + th + "」に変える。手順のP1をコピーして貼る"]);
+    a.push(["読み取った韓国語を本と見比べる","合っていれば「合っています。続けてください」と返す"]);
+    a.push(["出てきたかたまりから5個選ぶ","使い回しが利くものを優先。5〜10分で切り上げる（迷わない）"]);
     a.push(["自分で60秒の原稿を書く","辞書を引いてOK、下手でOK。ここが一番効く工程（30分）"]);
     a.push(["手順のP2を送って添削してもらう","モデル版と、覚えるべきかたまり5個をもらう（20分）"]);
     a.push(["モデル版を5回音読する","声に出す。読むだけにしない"]);
@@ -837,14 +883,7 @@ function promptList(){
 
   var p1book =
     head + '\n\n' +
-    '以下の韓国語の文章から、会話でそのまま使える「かたまり（決まった言い回し）」を10個抜き出してください。\n\n' +
-    '条件：\n' +
-    '・単語ではなく、2〜6語程度のかたまりで抜き出す\n' +
-    '・日常の雑談で使えるものを優先し、書き言葉専用のものは除く\n' +
-    '・各かたまりに「日本語訳」と「差し替え可能な部分」を示す\n' +
-    '・最後に、そのかたまりを使った短い例文を1つずつ付ける\n' +
-    '・褒め言葉は書かないでください\n\n' +
-    '【文章】\n（ここに本の韓国語を貼る）';
+    '添付した写真は韓国語の会話です。\nまず、写真から読み取った韓国語をそのまま書き出してください。\n私が「合っています」と返したら、次の作業に進んでください。\n\n【次の作業】\nこの会話から、会話でそのまま使える「かたまり（決まった言い回し）」を抜き出してください。\n多ければ10個まで、少なければ取れるだけで構いません（5個あれば十分です）。\n\n条件：\n・単語ではなく、2〜6語程度のかたまりで抜き出す\n・1つの文から複数のかたまりを取ってよい\n・日常の雑談で使えるものを優先し、書き言葉専用のものは除く\n・各かたまりに「日本語訳」と「差し替え可能な部分」を示す\n・最後に、そのかたまりを使った短い例文を1つずつ付ける\n・褒め言葉は書かないでください';
 
   var p1bunmatsu =
     head + '\n\n' +
